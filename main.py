@@ -20,6 +20,9 @@ app.add_middleware(
     allow_origins=origins,
     allow_credentials=True,
     allow_methods=["POST"],
+    allow_headers=["Content-Type", "Access-Control-Allow-Origin",
+                   "Access-Control-Allow-Methods", "X-Requested-With",
+                   "Authorization", "X-CSRF-Token"]
 )
 
 templates = Jinja2Templates(directory="html")
