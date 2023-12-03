@@ -36,7 +36,7 @@ def read_root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 
-@app.post("ml/")
+@app.post("/ml/")
 async def upload_photo(photo: UploadFile = File(...)):
     contents = await photo.read()
     image = Image.open(BytesIO(contents)).convert("L")
