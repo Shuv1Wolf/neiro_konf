@@ -61,6 +61,7 @@ window.onload = () => {
 
     // Рисование линий
     function drawLine(x, y) {
+        document.getElementById('prdict').innerHTML = 'Ваше число:'
         ctx.lineTo(x, y);
         ctx.stroke();
     }
@@ -86,6 +87,7 @@ window.onload = () => {
     document.getElementById('clear').onclick = () => {
         newDraw = true;
         clearCanvas();
+        document.getElementById('prdict').innerHTML = 'Ваше число:'
     }
 
     // Выгрузка
@@ -117,13 +119,53 @@ window.onload = () => {
         resizedContext.putImageData(imageData, 0, 0);
 
         const dataURL = resizedCanvas.toDataURL('image/png');
-        const link = document.createElement('a');
-        link.href = dataURL;
-        link.download = 'img.png';
-        link.click();
+
+        // Преобразуйте dataURL в Blob
+        const blob = dataURLtoBlob(dataURL);
+
+        // Создайте объект File из Blob
+        const file = new File([blob], 'image.png', { type: 'image/png' });
+
+        // Сохраните файл в переменной
+
+        // Функция для преобразования dataURL в Blob
+        function dataURLtoBlob(dataURL) {
+            const byteString = atob(dataURL.split(',')[1]);
+            const mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0];
+            const arrayBuffer = new ArrayBuffer(byteString.length);
+            const uint8Array = new Uint8Array(arrayBuffer);
+
+            for (let i = 0; i < byteString.length; i++) {
+                uint8Array[i] = byteString.charCodeAt(i);
+            }
+
+            return new Blob([arrayBuffer], { type: mimeString });
+        }
+
+        const formData = new FormData();
+
+        // Добавьте base64 данные в FormData с именем "photo"
+        formData.append('photo', file);
+
+        // Определите URL эндпоинта, на который вы хотите отправить фотографию
+        const endpoint = 'http://92.118.113.235/ml/';
+
+        // Определите параметры запроса
+        const options = {
+            method: 'POST',
+            body: formData,
+        };
+
+        // Отправьте запрос с использованием Fetch API
+        fetch(endpoint, options)
+            .then(response =>
+                response.json()
+            ).then(data => {
+                document.getElementById('prdict').innerHTML = 'Ваше число:'
+                document.getElementById('prdict').innerHTML = document.getElementById('prdict').innerHTML + ' ' + data.predicted_digit
+            })
+            .catch(error => {
+                console.error('Произошла ошибка:', error);
+            });
     });
-
-
-
-
 }

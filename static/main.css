@@ -62,3 +62,11 @@ body {
 .choice-btn:active{
     background-color: rgb(20, 139, 15);
 }
+
+.predict{
+    padding: 10px 0px;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+}
