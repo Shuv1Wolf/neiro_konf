@@ -61,7 +61,7 @@ window.onload = () => {
 
     // Рисование линий
     function drawLine(x, y) {
-        document.getElementById('prdict').innerHTML = 'Ваше число:'
+        document.getElementById('prdict').innerHTML = 'Ваша цифра:'
         ctx.lineTo(x, y);
         ctx.stroke();
     }
@@ -87,7 +87,7 @@ window.onload = () => {
     document.getElementById('clear').onclick = () => {
         newDraw = true;
         clearCanvas();
-        document.getElementById('prdict').innerHTML = 'Ваше число:'
+        document.getElementById('prdict').innerHTML = 'Ваша цифра:'
     }
 
     // Выгрузка
@@ -161,7 +161,7 @@ window.onload = () => {
             .then(response =>
                 response.json()
             ).then(data => {
-                document.getElementById('prdict').innerHTML = 'Ваше число:'
+                document.getElementById('prdict').innerHTML = 'Ваша цифра:'
                 document.getElementById('prdict').innerHTML = document.getElementById('prdict').innerHTML + ' ' + data.predicted_digit
             })
             .catch(error => {
