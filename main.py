@@ -28,7 +28,7 @@ app.add_middleware(
 templates = Jinja2Templates(directory="html")
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-model = load_model('model/model.h5')
+model = load_model('model.h5')
 
 
 @app.get("/")
